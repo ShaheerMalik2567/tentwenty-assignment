@@ -1,7 +1,6 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Info } from "lucide-react";
 import { type ReactNode, useEffect, useMemo } from "react";
 import { Controller, useForm } from "react-hook-form";
 
@@ -36,6 +35,13 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+
+import { cn } from "@/lib/utils";
 
 export type EntryFormDialogProps = {
   open: boolean;
@@ -49,36 +55,59 @@ export type EntryFormDialogProps = {
   editingEntry?: TimesheetEntryDto | null;
 };
 
+/** Figma-style filled circle with white “i” (not outline Lucide icon). */
+function InfoHintIcon({ className }: { className?: string }) {
+  return (
+    <span
+      className={cn(
+        "flex size-[18px] shrink-0 items-center justify-center rounded-full bg-slate-400 text-[11px] font-semibold leading-none tracking-tight text-white",
+        className,
+      )}
+      aria-hidden
+    >
+      i
+    </span>
+  );
+}
+
 function FieldLabel({
   htmlFor,
   required,
+  tooltip,
   children,
 }: {
   htmlFor?: string;
   required?: boolean;
+  /** Static helper shown on hover / focus (desktop). */
+  tooltip: string;
   children: ReactNode;
 }) {
   return (
-    <div className="flex items-center gap-1.5">
+    <div className="flex items-center gap-2">
       <Label
         htmlFor={htmlFor}
         className="text-sm font-medium text-neutral-700"
       >
         {children}
         {required ? (
-          <span className="text-timesheet-cell-text" aria-hidden>
+          <span className="text-neutral-900" aria-hidden>
             {" "}
             *
           </span>
         ) : null}
       </Label>
-      <button
-        type="button"
-        className="rounded-full text-neutral-400 outline-none hover:text-neutral-600 focus-visible:ring-2 focus-visible:ring-timesheet-action/40"
-        aria-label="More information"
-      >
-        <Info className="size-3.5 shrink-0" aria-hidden />
-      </button>
+      <Tooltip>
+        <TooltipTrigger
+          type="button"
+          aria-label={tooltip}
+          className="inline-flex shrink-0 rounded-full border-0 bg-transparent p-0 hover:opacity-90"
+        >
+          <InfoHintIcon />
+        </TooltipTrigger>
+        <TooltipContent side="top" sideOffset={8}>
+          {tooltip}
+        </TooltipContent>
+      </Tooltip>
     </div>
   );
 }
@@ -155,24 +184,29 @@ export function EntryFormDialog({
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
-        className="max-w-[480px] gap-0 overflow-hidden p-0 sm:max-w-[480px]"
+        className="max-w-[480px] gap-0 overflow-hidden border-0 bg-white p-0 shadow-[0_25px_50px_-12px_rgba(15,23,42,0.25)] ring-1 ring-neutral-200/90 sm:max-w-[480px]"
         showCloseButton={!busy}
       >
-        <DialogHeader className="space-y-0 border-b border-neutral-200 px-6 py-4 pr-14">
-          <DialogTitle className="text-left text-lg font-semibold text-neutral-900">
+        <DialogHeader className="space-y-0 border-b border-neutral-200 px-8 pb-4 pt-8 pr-14">
+          <DialogTitle className="text-left text-xl font-semibold tracking-tight text-neutral-900">
             {title}
           </DialogTitle>
         </DialogHeader>
 
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="space-y-5 px-6 py-5"
+          className="space-y-6 px-8 py-6"
           noValidate
         >
           <input type="hidden" {...form.register("date")} />
 
-          <div className="space-y-2">
-            <FieldLabel required>Select Project</FieldLabel>
+          <div className="space-y-2.5">
+            <FieldLabel
+              required
+              tooltip="Pick the project or product area this time entry belongs to."
+            >
+              Select Project
+            </FieldLabel>
             <Controller
               name="projectName"
               control={form.control}
@@ -184,7 +218,7 @@ export function EntryFormDialog({
                 >
                   <SelectTrigger
                     size="default"
-                    className="h-11 w-full rounded-lg border-neutral-300 bg-white data-placeholder:text-timesheet-cell-text"
+                    className="h-11 w-full rounded-lg border border-neutral-300 bg-white text-sm text-neutral-900 shadow-none data-placeholder:text-timesheet-cell-text"
                     aria-invalid={!!form.formState.errors.projectName}
                   >
                     <SelectValue placeholder="Project Name" />
@@ -206,8 +240,13 @@ export function EntryFormDialog({
             ) : null}
           </div>
 
-          <div className="space-y-2">
-            <FieldLabel required>Type of Work</FieldLabel>
+          <div className="space-y-2.5">
+            <FieldLabel
+              required
+              tooltip="Choose how this time should be categorized (e.g. bugs, features, or meetings)."
+            >
+              Type of Work
+            </FieldLabel>
             <Controller
               name="workType"
               control={form.control}
@@ -219,7 +258,7 @@ export function EntryFormDialog({
                 >
                   <SelectTrigger
                     size="default"
-                    className="h-11 w-full rounded-lg border-neutral-300 bg-white"
+                    className="h-11 w-full rounded-lg border border-neutral-300 bg-white text-sm text-neutral-900 shadow-none"
                     aria-invalid={!!form.formState.errors.workType}
                   >
                     <SelectValue placeholder="Select type" />
@@ -241,25 +280,25 @@ export function EntryFormDialog({
             ) : null}
           </div>
 
-          <div className="space-y-2">
+          <div className="space-y-2.5">
             <Label
               htmlFor="entry-description"
               className="text-sm font-medium text-neutral-700"
             >
               Task description{" "}
-              <span className="text-timesheet-cell-text" aria-hidden>
+              <span className="text-neutral-900" aria-hidden>
                 *
               </span>
             </Label>
             <Textarea
               id="entry-description"
-              rows={4}
+              rows={5}
               disabled={busy}
               placeholder="Write text here ..."
-              className="min-h-[120px] resize-y rounded-lg border-neutral-300 bg-white text-neutral-900 placeholder:text-timesheet-cell-text"
+              className="min-h-[140px] resize-y rounded-lg border border-neutral-300 bg-white px-3 py-2.5 text-sm text-neutral-900 placeholder:text-timesheet-cell-text"
               {...form.register("description")}
             />
-            <p className="text-xs text-timesheet-cell-text">
+            <p className="text-xs leading-relaxed text-timesheet-cell-text">
               A note for extra info
             </p>
             {form.formState.errors.description?.message ? (
@@ -269,13 +308,13 @@ export function EntryFormDialog({
             ) : null}
           </div>
 
-          <div className="space-y-2">
+          <div className="space-y-2.5">
             <Label
               htmlFor="entry-hours-stepper"
               className="text-sm font-medium text-neutral-700"
             >
               Hours{" "}
-              <span className="text-timesheet-cell-text" aria-hidden>
+              <span className="text-neutral-900" aria-hidden>
                 *
               </span>
             </Label>
@@ -305,11 +344,11 @@ export function EntryFormDialog({
             </p>
           ) : null}
 
-          <div className="flex flex-col gap-3 border-t border-neutral-200 pt-5 sm:flex-row sm:justify-between">
+          <div className="grid grid-cols-2 gap-4 border-t border-neutral-200 pt-6">
             <Button
               type="submit"
               disabled={busy}
-              className="h-11 flex-1 rounded-lg bg-timesheet-action text-white hover:bg-timesheet-action/90 sm:flex-none sm:min-w-[140px]"
+              className="h-11 w-full min-w-0 rounded-lg bg-timesheet-action text-sm font-medium text-white shadow-sm hover:bg-timesheet-action/90"
             >
               {submitLabel}
             </Button>
@@ -317,7 +356,7 @@ export function EntryFormDialog({
               type="button"
               variant="outline"
               disabled={busy}
-              className="h-11 flex-1 rounded-lg border-neutral-300 bg-white text-neutral-900 hover:bg-neutral-50 sm:flex-none sm:min-w-[140px]"
+              className="h-11 w-full min-w-0 rounded-lg border-neutral-300 bg-white text-sm font-medium text-neutral-900 shadow-sm hover:bg-neutral-50"
               onClick={() => onOpenChange(false)}
             >
               Cancel

@@ -5,6 +5,8 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { SessionProvider } from "next-auth/react";
 import * as React from "react";
 
+import { TooltipProvider } from "@/components/ui/tooltip";
+
 function makeQueryClient() {
   return new QueryClient({
     defaultOptions: {
@@ -30,8 +32,10 @@ export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <SessionProvider>
       <QueryClientProvider client={queryClient}>
-        {children}
-        <ReactQueryDevtools initialIsOpen={false} />
+        <TooltipProvider>
+          {children}
+          <ReactQueryDevtools initialIsOpen={false} />
+        </TooltipProvider>
       </QueryClientProvider>
     </SessionProvider>
   );

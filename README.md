@@ -37,6 +37,14 @@ Open [http://localhost:3000](http://localhost:3000). You are redirected to `/log
 
 Example `.env.example` is included; generate a strong secret for production.
 
+### Deploying (Vercel)
+
+The `/login` page calls `getServerSession`. In **production**, NextAuth **throws** if `NEXTAUTH_SECRET` is missing, which surfaces as Vercel’s generic “This page couldn’t load” / server error.
+
+1. In the Vercel project → **Settings** → **Environment Variables**, add **`NEXTAUTH_SECRET`** for **Production** and **Preview** (use a long random string, e.g. `openssl rand -base64 32`).
+2. Optionally set **`NEXTAUTH_URL`** to your canonical URL (e.g. `https://your-app.vercel.app` or your custom domain). If you skip it, `next.config.ts` falls back to `https://$VERCEL_URL` on Vercel.
+3. Redeploy after saving variables.
+
 ### Demo login (mock user)
 
 | Email                       | Password       |

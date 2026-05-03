@@ -1,6 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Info } from "lucide-react";
 import { type ReactNode, useEffect, useMemo } from "react";
 import { Controller, useForm } from "react-hook-form";
 
@@ -41,8 +42,6 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 
-import { cn } from "@/lib/utils";
-
 export type EntryFormDialogProps = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
@@ -54,21 +53,6 @@ export type EntryFormDialogProps = {
   defaultDateIso?: string;
   editingEntry?: TimesheetEntryDto | null;
 };
-
-/** Figma-style filled circle with white “i” (not outline Lucide icon). */
-function InfoHintIcon({ className }: { className?: string }) {
-  return (
-    <span
-      className={cn(
-        "flex size-[18px] shrink-0 items-center justify-center rounded-full bg-slate-400 text-[11px] font-semibold leading-none tracking-tight text-white",
-        className,
-      )}
-      aria-hidden
-    >
-      i
-    </span>
-  );
-}
 
 function FieldLabel({
   htmlFor,
@@ -102,9 +86,13 @@ function FieldLabel({
           aria-label={tooltip}
           className="inline-flex shrink-0 rounded-full border-0 bg-transparent p-0 hover:opacity-90"
         >
-          <InfoHintIcon />
+          <Info
+            className="size-[12px] shrink-0 text-[#A8B8C4]"
+            strokeWidth={2}
+            aria-hidden
+          />
         </TooltipTrigger>
-        <TooltipContent side="top" sideOffset={8}>
+        <TooltipContent side="top" sideOffset={8} className={'min-w-[200px]'}>
           {tooltip}
         </TooltipContent>
       </Tooltip>
@@ -322,7 +310,7 @@ export function EntryFormDialog({
               name="hours"
               control={form.control}
               render={({ field }) => (
-                <div id="entry-hours-stepper">
+                <div id="entry-hours-stepper" className="w-fit">
                   <HoursStepperField
                     value={field.value}
                     onChange={field.onChange}

@@ -1,5 +1,7 @@
 "use client";
 
+import { Minus, Plus } from "lucide-react";
+
 import { cn } from "@/lib/utils";
 
 type HoursStepperFieldProps = {
@@ -34,7 +36,7 @@ export function HoursStepperField({
   return (
     <div
       className={cn(
-        "flex items-stretch overflow-hidden rounded-lg border border-neutral-300 bg-white",
+        "inline-flex w-fit max-w-full items-stretch overflow-hidden rounded-lg border border-neutral-300 bg-white",
         disabled && "pointer-events-none opacity-50",
       )}
     >
@@ -42,22 +44,22 @@ export function HoursStepperField({
         type="button"
         disabled={disabled || value <= min}
         onClick={() => onChange(clampStep(value - step, step, min, max))}
-        className="flex w-11 shrink-0 items-center justify-center bg-neutral-100 text-lg font-medium text-neutral-700 transition-colors hover:bg-neutral-200 disabled:opacity-40"
+        className="flex w-10 shrink-0 items-center justify-center bg-neutral-100 text-lg font-medium text-neutral-700 transition-colors hover:bg-neutral-200 disabled:opacity-40"
         aria-label="Decrease hours"
       >
-        −
+        <Minus className="size-4" strokeWidth={2} aria-hidden />
       </button>
-      <div className="flex min-h-11 min-w-[4.5rem] flex-1 items-center justify-center border-x border-neutral-300 px-3 text-center text-sm font-semibold tabular-nums text-neutral-900">
+      <div className="flex min-h-11 min-w-14 items-center justify-center border-x border-neutral-300 px-2.5 text-center text-sm font-semibold tabular-nums text-neutral-900">
         {label}
       </div>
       <button
         type="button"
         disabled={disabled || value >= max}
         onClick={() => onChange(clampStep(value + step, step, min, max))}
-        className="flex w-11 shrink-0 items-center justify-center bg-neutral-100 text-lg font-medium text-neutral-700 transition-colors hover:bg-neutral-200 disabled:opacity-40"
+        className="flex w-10 shrink-0 items-center justify-center bg-neutral-100 text-lg font-medium text-neutral-700 transition-colors hover:bg-neutral-200 disabled:opacity-40"
         aria-label="Increase hours"
       >
-        +
+        <Plus className="size-4" strokeWidth={2} aria-hidden />
       </button>
     </div>
   );

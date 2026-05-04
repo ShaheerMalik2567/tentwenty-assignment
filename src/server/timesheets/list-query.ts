@@ -1,8 +1,8 @@
-import { formatWeekDateRangeDisplay } from "@/lib/timesheets/format-week-range";
 import {
+  formatWeekDateRangeDisplay,
   getTimesheetUiStatus,
   type TimesheetUiStatus,
-} from "@/lib/timesheets/week-status";
+} from "@/lib/timesheets/timesheet-utils";
 import type { TimesheetEntry, TimesheetWeek } from "@/server/mock/types";
 import { getStore } from "@/server/mock/store";
 import type { TimesheetListRow, TimesheetListSortField } from "@/types/timesheet";

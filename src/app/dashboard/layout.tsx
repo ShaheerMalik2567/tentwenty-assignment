@@ -1,5 +1,5 @@
 import { AppHeader } from "@/components/layout/app-header";
-import { SiteFooter } from "@/components/site/site-footer";
+import { SiteFooter } from "@/components/layout/site-footer";
 
 export default function DashboardLayout({
   children,

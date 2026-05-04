@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import type { TimesheetUiStatus } from "@/lib/timesheets/week-status";
+import type { TimesheetUiStatus } from "@/lib/timesheets/timesheet-utils";
 
 const LABEL: Record<TimesheetUiStatus, string> = {
   completed: "COMPLETED",

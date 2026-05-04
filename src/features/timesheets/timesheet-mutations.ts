@@ -5,6 +5,7 @@ import {
   useQueryClient,
   type QueryClient,
 } from "@tanstack/react-query";
+import { toast } from "sonner";
 
 import { weekDetailQueryKey } from "@/features/timesheets/timesheet-queries";
 import type { TimesheetEntryBodyInput } from "@/lib/timesheets/entry-schema";
@@ -19,7 +20,7 @@ async function readError(res: Response): Promise<string> {
   }
 }
 
-export async function postTimesheetEntry(
+async function postTimesheetEntry(
   weekId: string,
   body: TimesheetEntryBodyInput,
 ): Promise<TimesheetEntryDto> {
@@ -33,7 +34,7 @@ export async function postTimesheetEntry(
   return data.entry;
 }
 
-export async function putTimesheetEntry(
+async function putTimesheetEntry(
   weekId: string,
   entryId: string,
   body: TimesheetEntryBodyInput,
@@ -51,7 +52,7 @@ export async function putTimesheetEntry(
   return data.entry;
 }
 
-export async function deleteTimesheetEntryApi(
+async function deleteTimesheetEntryApi(
   weekId: string,
   entryId: string,
 ): Promise<void> {
@@ -74,6 +75,12 @@ export function useCreateTimesheetEntry(weekId: string) {
     onSuccess: () => {
       invalidateTimesheets(qc);
       void qc.invalidateQueries({ queryKey: weekDetailQueryKey(weekId) });
+      toast.success("Entry added");
+    },
+    onError: (err) => {
+      toast.error(
+        err instanceof Error ? err.message : "Could not add entry",
+      );
     },
   });
 }
@@ -91,6 +98,12 @@ export function useUpdateTimesheetEntry(weekId: string) {
     onSuccess: () => {
       invalidateTimesheets(qc);
       void qc.invalidateQueries({ queryKey: weekDetailQueryKey(weekId) });
+      toast.success("Entry updated");
+    },
+    onError: (err) => {
+      toast.error(
+        err instanceof Error ? err.message : "Could not update entry",
+      );
     },
   });
 }
@@ -103,6 +116,12 @@ export function useDeleteTimesheetEntry(weekId: string) {
     onSuccess: () => {
       invalidateTimesheets(qc);
       void qc.invalidateQueries({ queryKey: weekDetailQueryKey(weekId) });
+      toast.success("Entry deleted");
+    },
+    onError: (err) => {
+      toast.error(
+        err instanceof Error ? err.message : "Could not delete entry",
+      );
     },
   });
 }

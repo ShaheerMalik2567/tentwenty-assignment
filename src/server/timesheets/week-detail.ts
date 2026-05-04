@@ -1,5 +1,5 @@
 import { TARGET_WEEK_HOURS } from "@/lib/timesheets/constants";
-import { formatWeekDateRangeDisplay } from "@/lib/timesheets/format-week-range";
+import { formatWeekDateRangeDisplay } from "@/lib/timesheets/timesheet-utils";
 import type { TimesheetWeek } from "@/server/mock/types";
 import { getStore } from "@/server/mock/store";
 import type { TimesheetWeekDetailResponse } from "@/types/timesheet";

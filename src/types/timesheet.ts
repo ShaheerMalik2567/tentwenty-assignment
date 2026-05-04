@@ -1,4 +1,4 @@
-import type { TimesheetUiStatus } from "@/lib/timesheets/week-status";
+import type { TimesheetUiStatus } from "@/lib/timesheets/timesheet-utils";
 
 /** Sort fields supported by GET /api/timesheets (must stay in sync with the route handler). */
 export type TimesheetListSortField = "week" | "date" | "status";

@@ -1,9 +1,11 @@
+import { queryOptions } from "@tanstack/react-query";
+
+import type { TimesheetUiStatus } from "@/lib/timesheets/timesheet-utils";
 import type {
   TimesheetListResponse,
   TimesheetListSortField,
   TimesheetWeekDetailResponse,
 } from "@/types/timesheet";
-import type { TimesheetUiStatus } from "@/lib/timesheets/week-status";
 
 export type TimesheetListQueryInput = {
   page: number;
@@ -19,7 +21,7 @@ export function timesheetsListQueryKey(input: TimesheetListQueryInput) {
   return ["timesheets", "list", input] as const;
 }
 
-export async function fetchTimesheetList(
+async function fetchTimesheetList(
   input: TimesheetListQueryInput,
 ): Promise<TimesheetListResponse> {
   const params = new URLSearchParams();
@@ -37,11 +39,19 @@ export async function fetchTimesheetList(
   return res.json() as Promise<TimesheetListResponse>;
 }
 
+/** Use with `useQuery(getTimesheetListQuery(input))`. */
+export function getTimesheetListQuery(input: TimesheetListQueryInput) {
+  return queryOptions({
+    queryKey: timesheetsListQueryKey(input),
+    queryFn: () => fetchTimesheetList(input),
+  });
+}
+
 export function weekDetailQueryKey(weekId: string) {
   return ["timesheets", "detail", weekId] as const;
 }
 
-export async function fetchWeekDetail(
+async function fetchWeekDetail(
   weekId: string,
 ): Promise<TimesheetWeekDetailResponse> {
   const res = await fetch(`/api/timesheets/${weekId}`);
@@ -49,4 +59,13 @@ export async function fetchWeekDetail(
   if (res.status === 404) throw new Error("Week not found.");
   if (!res.ok) throw new Error("Could not load week.");
   return res.json() as Promise<TimesheetWeekDetailResponse>;
+}
+
+/** Use with `useQuery(getWeekDetailQuery(weekId))`. Disabled when `weekId` is falsy. */
+export function getWeekDetailQuery(weekId: string | undefined) {
+  return queryOptions({
+    queryKey: weekDetailQueryKey(weekId ?? ""),
+    queryFn: () => fetchWeekDetail(weekId!),
+    enabled: Boolean(weekId),
+  });
 }

@@ -1,14 +1,14 @@
 "use client";
 
 import Link from "next/link";
+import { useQuery } from "@tanstack/react-query";
 import { ArrowLeft } from "lucide-react";
 import { useCallback, useState } from "react";
 
 import { DeleteEntryDialog } from "@/components/timesheets/delete-entry-dialog";
 import { EntryFormDialog } from "@/components/timesheets/entry-form-dialog";
-import { formatDayHeading } from "@/lib/timesheets/format-day-heading";
-import { groupEntriesByDate } from "@/lib/timesheets/group-entries-by-date";
-import { useWeekDetailQuery } from "@/features/timesheets/use-week-detail";
+import { getWeekDetailQuery } from "@/features/timesheets/timesheet-queries";
+import { formatDayHeading, groupEntriesByDate } from "@/lib/timesheets/timesheet-utils";
 import type { TimesheetEntryDto } from "@/types/timesheet";
 
 import { Button } from "@/components/ui/button";
@@ -19,7 +19,9 @@ type WeekDetailViewProps = {
 };
 
 export function WeekDetailView({ weekId }: WeekDetailViewProps) {
-  const { data, isLoading, isError, error } = useWeekDetailQuery(weekId);
+  const { data, isLoading, isError, error } = useQuery(
+    getWeekDetailQuery(weekId),
+  );
 
   const [entryDialogOpen, setEntryDialogOpen] = useState(false);
   const [entryDialogMode, setEntryDialogMode] = useState<"create" | "edit">(

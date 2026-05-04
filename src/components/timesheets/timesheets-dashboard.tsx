@@ -1,5 +1,6 @@
 "use client";
 
+import { useQuery } from "@tanstack/react-query";
 import {
   functionalUpdate,
   type OnChangeFn,
@@ -15,8 +16,8 @@ import {
   getPresetBounds,
   type DateRangePresetValue,
 } from "@/features/timesheets/date-range-presets";
-import { useTimesheetListQuery } from "@/features/timesheets/use-timesheet-list";
-import type { TimesheetUiStatus } from "@/lib/timesheets/week-status";
+import { getTimesheetListQuery } from "@/features/timesheets/timesheet-queries";
+import type { TimesheetUiStatus } from "@/lib/timesheets/timesheet-utils";
 import type { TimesheetListSortField } from "@/types/timesheet";
 
 import { TimesheetsDataTable } from "@/components/timesheets/timesheets-data-table";
@@ -46,7 +47,9 @@ export function TimesheetsDashboard() {
     [page, pageSize, status, dateBounds, sortBy, sortDir],
   );
 
-  const { data, isLoading, isError, error } = useTimesheetListQuery(queryInput);
+  const { data, isLoading, isError, error } = useQuery(
+    getTimesheetListQuery(queryInput),
+  );
 
   const sorting = useMemo(
     () => apiSortToSortingState(sortBy, sortDir),

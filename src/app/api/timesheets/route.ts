@@ -1,7 +1,7 @@
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 
-import type { TimesheetUiStatus } from "@/lib/timesheets/week-status";
+import type { TimesheetUiStatus } from "@/lib/timesheets/timesheet-utils";
 import { authOptions } from "@/server/auth";
 import {
   queryTimesheetList,

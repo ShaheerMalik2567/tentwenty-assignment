@@ -2,7 +2,7 @@
 
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
-import { buildPaginationItems } from "@/lib/timesheets/pagination-pages";
+import { buildPaginationItems } from "@/lib/timesheets/timesheet-utils";
 import { cn } from "@/lib/utils";
 import {
   Select,

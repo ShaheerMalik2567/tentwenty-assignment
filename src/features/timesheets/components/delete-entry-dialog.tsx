@@ -1,6 +1,6 @@
 "use client";
 
-import { useDeleteTimesheetEntry } from "@/features/timesheets/timesheet-mutations";
+import { useDeleteTimesheetEntry } from "@/features/timesheets/apis/timesheet-mutations";
 import type { TimesheetEntryDto } from "@/types/timesheet";
 
 import { Button } from "@/components/ui/button";

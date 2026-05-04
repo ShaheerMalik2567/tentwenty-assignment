@@ -5,14 +5,14 @@ import { useQuery } from "@tanstack/react-query";
 import { ArrowLeft } from "lucide-react";
 import { useCallback, useState } from "react";
 
-import { DeleteEntryDialog } from "@/components/timesheets/delete-entry-dialog";
-import { EntryFormDialog } from "@/components/timesheets/entry-form-dialog";
-import { getWeekDetailQuery } from "@/features/timesheets/timesheet-queries";
+import { DeleteEntryDialog } from "@/features/timesheets/components/delete-entry-dialog";
+import { EntryFormDialog } from "@/features/timesheets/components/entry-form-dialog";
+import { getWeekDetailQuery } from "@/features/timesheets/apis/timesheet-queries";
 import { formatDayHeading, groupEntriesByDate } from "@/lib/timesheets/timesheet-utils";
 import type { TimesheetEntryDto } from "@/types/timesheet";
 
 import { Button } from "@/components/ui/button";
-import { TaskEntriesTable } from "@/components/timesheets/task-entries-table";
+import { TaskEntriesTable } from "@/features/timesheets/components/task-entries-table";
 
 type WeekDetailViewProps = {
   weekId: string;

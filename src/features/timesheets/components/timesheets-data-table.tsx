@@ -9,7 +9,7 @@ import {
 } from "@tanstack/react-table";
 import { useMemo } from "react";
 
-import { createTimesheetListColumns } from "@/components/timesheets/timesheet-list-columns";
+import { createTimesheetListColumns } from "@/features/timesheets/components/timesheet-list-columns";
 import {
   Table,
   TableBody,

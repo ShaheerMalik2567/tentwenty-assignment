@@ -7,7 +7,7 @@ import {
 } from "@tanstack/react-query";
 import { toast } from "sonner";
 
-import { weekDetailQueryKey } from "@/features/timesheets/timesheet-queries";
+import { weekDetailQueryKey } from "@/features/timesheets/apis/timesheet-queries";
 import type { TimesheetEntryBodyInput } from "@/lib/timesheets/entry-schema";
 import type { TimesheetEntryDto } from "@/types/timesheet";
 

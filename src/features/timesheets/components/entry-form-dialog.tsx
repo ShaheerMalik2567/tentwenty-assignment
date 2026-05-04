@@ -8,7 +8,7 @@ import { Controller, useForm } from "react-hook-form";
 import {
   useCreateTimesheetEntry,
   useUpdateTimesheetEntry,
-} from "@/features/timesheets/timesheet-mutations";
+} from "@/features/timesheets/apis/timesheet-mutations";
 import {
   PROJECT_OPTIONS,
   WORK_TYPE_OPTIONS,
@@ -19,7 +19,7 @@ import {
 } from "@/lib/timesheets/entry-schema";
 import type { TimesheetEntryDto } from "@/types/timesheet";
 
-import { HoursStepperField } from "@/components/timesheets/hours-stepper-field";
+import { HoursStepperField } from "@/features/timesheets/components/hours-stepper-field";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,

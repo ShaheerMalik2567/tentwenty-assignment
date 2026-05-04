@@ -11,7 +11,7 @@ import { useMemo } from "react";
 import {
   createTaskEntryColumns,
   type TaskColumnHandlers,
-} from "@/components/timesheets/task-entry-columns";
+} from "@/features/timesheets/components/task-entry-columns";
 import {
   Table,
   TableBody,

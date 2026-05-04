@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { WeekDetailView } from "@/components/timesheets/week-detail-view";
+import { WeekDetailView } from "@/features/timesheets/components/week-detail-view";
 
 type PageProps = {
   params: Promise<{ weekId: string }>;

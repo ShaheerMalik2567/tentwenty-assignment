@@ -4,10 +4,10 @@ import type { ColumnDef } from "@tanstack/react-table";
 import { ArrowDown, ArrowUp, ArrowUpDown } from "lucide-react";
 import Link from "next/link";
 
-import { COLUMN_IDS } from "@/features/timesheets/list-sort-mapping";
+import { COLUMN_IDS } from "@/features/timesheets/utils/list-sort-mapping";
 import type { TimesheetListRow } from "@/types/timesheet";
 
-import { TimesheetStatusBadge } from "@/components/timesheets/timesheet-status-badge";
+import { TimesheetStatusBadge } from "@/features/timesheets/components/timesheet-status-badge";
 
 function SortGlyph({ sorted }: { sorted: false | "asc" | "desc" }) {
   if (sorted === "desc") return <ArrowDown className="size-4 shrink-0 opacity-70" />;

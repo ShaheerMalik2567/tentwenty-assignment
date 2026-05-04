@@ -11,18 +11,18 @@ import { useMemo, useState } from "react";
 import {
   apiSortToSortingState,
   sortingStateToApi,
-} from "@/features/timesheets/list-sort-mapping";
+} from "@/features/timesheets/utils/list-sort-mapping";
 import {
   getPresetBounds,
   type DateRangePresetValue,
-} from "@/features/timesheets/date-range-presets";
-import { getTimesheetListQuery } from "@/features/timesheets/timesheet-queries";
+} from "@/features/timesheets/utils/date-range-presets";
+import { getTimesheetListQuery } from "@/features/timesheets/apis/timesheet-queries";
 import type { TimesheetUiStatus } from "@/lib/timesheets/timesheet-utils";
 import type { TimesheetListSortField } from "@/types/timesheet";
 
-import { TimesheetsDataTable } from "@/components/timesheets/timesheets-data-table";
-import { TimesheetsPagination } from "@/components/timesheets/timesheets-pagination";
-import { TimesheetsToolbar } from "@/components/timesheets/timesheets-toolbar";
+import { TimesheetsDataTable } from "@/features/timesheets/components/timesheets-data-table";
+import { TimesheetsPagination } from "@/features/timesheets/components/timesheets-pagination";
+import { TimesheetsToolbar } from "@/features/timesheets/components/timesheets-toolbar";
 
 export function TimesheetsDashboard() {
   const [page, setPage] = useState(1);

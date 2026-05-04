@@ -3,7 +3,7 @@
 import {
   DATE_RANGE_PRESETS,
   type DateRangePresetValue,
-} from "@/features/timesheets/date-range-presets";
+} from "@/features/timesheets/utils/date-range-presets";
 import type { TimesheetUiStatus } from "@/lib/timesheets/timesheet-utils";
 import {
   Select,

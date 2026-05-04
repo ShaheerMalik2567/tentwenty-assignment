@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { TimesheetsDashboard } from "@/components/timesheets/timesheets-dashboard";
+import { TimesheetsDashboard } from "@/features/timesheets/components/timesheets-dashboard";
 
 export const metadata: Metadata = {
   title: "Timesheets | ticktock",
